@@ -1,24 +1,49 @@
 const fs = require('fs');
 const path = require('path');
+const Promise = require('bluebird');
+
 console.log('hello world');
 
-// Asynchronous operation sample
-fs.readdir(__dirname, (err, files) => {
-  setTimeout(() => {
-    console.log('---------------------------------');
-    console.log(`reading from ${__dirname}`);
-    console.log('---------------------------------');
-    files.map(file => {
-      console.log(file);
-    });
-  }, 300);
-});
+function readCurrentDirectory() {
+  return new Promise(
+    (resolve, reject) => {
+      fs.readdir(__dirname, (err, files) => {
+        if (err) {
+          return reject(err);
+        }
+        setTimeout(() => {
+          console.log('---------------------------------');
+          console.log(`reading from ${__dirname}`);
+          console.log('---------------------------------');
+          files.map(file => {
+            console.log(file);
+          });
+          return resolve();
+        }, 300);
+      });
+    }
+  );
+}
 
-fs.readdir(path.join(__dirname, '../'), (err, files) => {
-  console.log('---------------------------------');
-  console.log(`reading from ${path.join(__dirname, '../')}`)
-  console.log('---------------------------------');
-  files.map(file => {
-    console.log(file);
-  });
-});
+function readParentDirectory() {
+  return new Promise(
+    (resolve, reject) => {
+      fs.readdir(path.join(__dirname, '../'), (err, files) => {
+        if (err) {
+          return reject(err);
+        }
+        console.log('---------------------------------');
+        console.log(`reading from ${path.join(__dirname, '../')}`)
+        console.log('---------------------------------');
+        files.map(file => {
+          console.log(file);
+        });
+        return resolve();
+      });
+    }
+  );
+}
+
+// Promise chain!
+readCurrentDirectory()
+  .then(readParentDirectory);
