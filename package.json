@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-demo-workday",
+  "version": "1.0.0",
+  "description": "A Node.js sample application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eric Nograles <enograles@appirio.com>",
+  "license": "MIT"
+}
