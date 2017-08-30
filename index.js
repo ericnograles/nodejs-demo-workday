@@ -8,6 +8,7 @@ function readCurrentDirectory() {
   return new Promise(
     (resolve, reject) => {
       fs.readdir(__dirname, (err, files) => {
+        // return reject(new Error('OH NO!'));
         if (err) {
           return reject(err);
         }
@@ -46,4 +47,7 @@ function readParentDirectory() {
 
 // Promise chain!
 readCurrentDirectory()
-  .then(readParentDirectory);
+  .then(readParentDirectory)
+  .catch(error => {
+    console.error(error);
+  });
